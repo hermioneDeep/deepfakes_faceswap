@@ -21,8 +21,8 @@ def save_model_weights():
     decoder_B.save_weights( "models/decoder_B.h5" )
     print( "save model weights" )
 
-images_A = get_image_paths( "data/trump" )
-images_B = get_image_paths( "data/cage"  )
+images_A = get_image_paths( "workspace/data_dst" )
+images_B = get_image_paths( "workspace/data_src"  )
 images_A = load_images( images_A ) / 255.0
 images_B = load_images( images_B ) / 255.0
 
@@ -31,7 +31,7 @@ images_A += images_B.mean( axis=(0,1,2) ) - images_A.mean( axis=(0,1,2) )
 print( "press 'q' to stop training and save model" )
 
 for epoch in range(1000000):
-    batch_size = 2048
+    batch_size = 512
     warped_A, target_A = get_training_data( images_A, batch_size )
     warped_B, target_B = get_training_data( images_B, batch_size )
 
