@@ -7,6 +7,9 @@ from tensorflow.python.keras.layers.advanced_activations import LeakyReLU
 from tensorflow.python.keras.layers.convolutional import Conv2D
 from tensorflow.keras.optimizers import Adam
 from pixel_shuffler import PixelShuffler
+from tensorflow.python.framework.ops import disable_eager_execution
+
+disable_eager_execution()
 
 optimizer = Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 )
 

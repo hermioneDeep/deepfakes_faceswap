@@ -2,9 +2,9 @@
 # by t-ae
 # https://gist.github.com/t-ae/6e1016cc188104d123676ccef3264981
 
-from keras.utils import conv_utils
+from tensorflow.python.keras.utils import conv_utils
 from tensorflow.keras.layers import Layer
-import keras.backend as K
+import tensorflow.keras.backend as K
 
 class PixelShuffler(Layer):
     def __init__(self, size=(2, 2), data_format=None, **kwargs):
