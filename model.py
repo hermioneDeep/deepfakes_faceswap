@@ -1,9 +1,8 @@
-from keras.models import Model
-from keras.layers import Input, Dense, Flatten, Reshape
-from keras.layers.advanced_activations import LeakyReLU
-from keras.layers.convolutional import Conv2D
-from keras.optimizers import Adam
-
+from tensorflow.python.keras.models import Model
+from tensorflow.python.keras.layers import Input, Dense, Flatten, Reshape
+from tensorflow.python.keras.layers.advanced_activations import LeakyReLU
+from tensorflow.python.keras.layers.convolutional import Conv2D
+from tensorflow.python.keras.optimizers import Adam
 from pixel_shuffler import PixelShuffler
 
 optimizer = Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 )
