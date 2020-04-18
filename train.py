@@ -61,7 +61,7 @@ for epoch in range(1000000):
 
     figure = numpy.clip( figure * 255, 0, 255 ).astype('uint8')
 
-    cv2.imshow( "", figure )
+    #cv2.imshow( "", figure )
     key = cv2.waitKey(1)
     if key == ord('q'):
         save_model_weights()
