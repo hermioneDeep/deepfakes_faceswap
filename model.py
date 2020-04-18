@@ -50,12 +50,6 @@ def Decoder():
     x = Conv2D( 3, kernel_size=5, padding='same', activation='sigmoid' )(x)
     return Model( input_, x )
 
-encoder = Encoder()
-decoder_A = Decoder()
-decoder_B = Decoder()
-
-x = Input( shape=IMAGE_SHAPE )
-
 resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
 tf.config.experimental_connect_to_cluster(resolver)
 # This is the TPU initialization code that has to be at the beginning.
@@ -63,6 +57,11 @@ tf.tpu.experimental.initialize_tpu_system(resolver)
 strategy = tf.distribute.experimental.TPUStrategy(resolver)
 try:
     with strategy.scope():
+        encoder = Encoder()
+        decoder_A = Decoder()
+        decoder_B = Decoder()
+
+        x = Input( shape=IMAGE_SHAPE )
         autoencoder_A = Model( x, decoder_A( encoder(x) ) )
         autoencoder_B = Model( x, decoder_B( encoder(x) ) )
     print("compiled")
