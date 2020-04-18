@@ -65,6 +65,7 @@ strategy = tf.distribute.experimental.TPUStrategy(resolver)
 with strategy.scope():
     autoencoder_A = Model( x, decoder_A( encoder(x) ) )
     autoencoder_B = Model( x, decoder_B( encoder(x) ) )
+print("compiled")
 
 autoencoder_A.compile( optimizer=optimizer, loss='mean_absolute_error' )
 autoencoder_B.compile( optimizer=optimizer, loss='mean_absolute_error' )
