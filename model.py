@@ -1,3 +1,4 @@
+import tensorflow as tf
 from tensorflow.python.keras.models import Model
 from tensorflow.python.keras.layers import Input, Dense, Flatten, Reshape
 from tensorflow.python.keras.layers.advanced_activations import LeakyReLU
