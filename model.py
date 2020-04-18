@@ -53,8 +53,16 @@ decoder_B = Decoder()
 
 x = Input( shape=IMAGE_SHAPE )
 
-autoencoder_A = Model( x, decoder_A( encoder(x) ) )
-autoencoder_B = Model( x, decoder_B( encoder(x) ) )
+resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
+tf.config.experimental_connect_to_cluster(resolver)
+# This is the TPU initialization code that has to be at the beginning.
+tf.tpu.experimental.initialize_tpu_system(resolver)
+strategy = tf.distribute.experimental.TPUStrategy(resolver)
+
+with strategy.scope():
+    autoencoder_A = Model( x, decoder_A( encoder(x) ) )
+    autoencoder_B = Model( x, decoder_B( encoder(x) ) )
+
 autoencoder_A.compile( optimizer=optimizer, loss='mean_absolute_error' )
 autoencoder_B.compile( optimizer=optimizer, loss='mean_absolute_error' )
 
