@@ -3,7 +3,7 @@
 # https://gist.github.com/t-ae/6e1016cc188104d123676ccef3264981
 
 from keras.utils import conv_utils
-from keras.engine.topology import Layer
+from tensorflow.keras.layers import Layer
 import keras.backend as K
 
 class PixelShuffler(Layer):
