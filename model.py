@@ -58,18 +58,15 @@ tf.config.experimental_connect_to_cluster(resolver)
 # This is the TPU initialization code that has to be at the beginning.
 tf.tpu.experimental.initialize_tpu_system(resolver)
 strategy = tf.distribute.experimental.TPUStrategy(resolver)
-try:
-    with strategy.scope():
-        encoder = Encoder()
-        decoder_A = Decoder()
-        decoder_B = Decoder()
+with strategy.scope():
+    encoder = Encoder()
+    decoder_A = Decoder()
+    decoder_B = Decoder()
 
-        x = Input( shape=IMAGE_SHAPE )
-        autoencoder_A = Model( x, decoder_A( encoder(x) ) )
-        autoencoder_B = Model( x, decoder_B( encoder(x) ) )
-    print("compiled")
-except:
-    print("error")
+    x = Input( shape=IMAGE_SHAPE )
+    autoencoder_A = Model( x, decoder_A( encoder(x) ) )
+    autoencoder_B = Model( x, decoder_B( encoder(x) ) )
+print("compiled")
 autoencoder_A.compile( optimizer=optimizer, loss='mean_absolute_error' )
 autoencoder_B.compile( optimizer=optimizer, loss='mean_absolute_error' )
 
