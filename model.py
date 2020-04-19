@@ -16,7 +16,7 @@ tf.config.experimental_connect_to_cluster(resolver)
 tf.tpu.experimental.initialize_tpu_system(resolver)
 strategy = tf.distribute.experimental.TPUStrategy(resolver)
 
-optimizer = tf.constant(Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 ))
+optimizer = Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 )
 
 IMAGE_SHAPE = tf.constant((64,64,3)) #TODO
 ENCODER_DIM = tf.constant(1024)
