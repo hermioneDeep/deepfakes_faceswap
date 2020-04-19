@@ -23,7 +23,7 @@ ENCODER_DIM = tf.constant(1024)
 
 def conv( filters ):
     def block(x):
-        x = Conv2D( filters, kernel_size=tf.constant(5), strides=tf.constant(2), padding=tf.constant('same'))(x)
+        x = Conv2D( filters, kernel_size=5, strides=2, padding='same' )(x)
         x = LeakyReLU(0.1)(x)
         return x
     return block
