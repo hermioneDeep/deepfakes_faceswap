@@ -11,14 +11,19 @@ from pixel_shuffler import PixelShuffler
 
 #disable_eager_execution()
 
-optimizer = Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 )
+resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
+tf.config.experimental_connect_to_cluster(resolver)
+tf.tpu.experimental.initialize_tpu_system(resolver)
+strategy = tf.distribute.experimental.TPUStrategy(resolver)
 
-IMAGE_SHAPE = (64,64,3)
-ENCODER_DIM = 1024
+optimizer = tf.constant(Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 ))
+
+IMAGE_SHAPE = tf.constant((64,64,3)) #TODO
+ENCODER_DIM = tf.constant(1024)
 
 def conv( filters ):
     def block(x):
-        x = Conv2D( filters, kernel_size=5, strides=2, padding='same' )(x)
+        x = Conv2D( filters, kernel_size=tf.constant(5), strides=tf.constant(2), padding=tf.constant('same'))(x)
         x = LeakyReLU(0.1)(x)
         return x
     return block
@@ -53,11 +58,7 @@ def Decoder():
     x = Conv2D( 3, kernel_size=5, padding='same', activation='sigmoid' )(x)
     return Model( input_, x )
 
-resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
-tf.config.experimental_connect_to_cluster(resolver)
 # This is the TPU initialization code that has to be at the beginning.
-tf.tpu.experimental.initialize_tpu_system(resolver)
-strategy = tf.distribute.experimental.TPUStrategy(resolver)
 try:
     with strategy.scope():
         encoder = Encoder()
