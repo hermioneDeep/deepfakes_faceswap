@@ -2,7 +2,7 @@ import cv2
 import numpy
 
 from utils import get_image_paths, load_images, stack_images
-from training_data import get_training_data, get_train_images
+from training_data import get_training_data, get_train_images, ArtificialDataset
 
 from model import autoencoder_A
 from model import autoencoder_B
