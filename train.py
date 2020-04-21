@@ -8,8 +8,6 @@ from model import autoencoder_A
 from model import autoencoder_B
 from model import encoder, decoder_A, decoder_B
 
-ds_counter = tf.data.Dataset.from_generator(get_train_images, output_types=tf.float32)
-
 try:
     encoder  .load_weights( "models/encoder.h5"   )
     decoder_A.load_weights( "models/decoder_A.h5" )

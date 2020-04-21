@@ -2,7 +2,6 @@ import numpy
 from image_augmentation import random_transform
 from image_augmentation import random_warp
 from utils import get_images
-import cv2
 
 random_transform_args = {
     'rotation_range': 10,
@@ -12,18 +11,15 @@ random_transform_args = {
     }
 
 
-def get_image_paths( directory ):
-    return [ x.path for x in os.scandir( directory ) if x.name.endswith(".jpg") or x.name.endswith(".png") ]
-
-def get_train_images(stop):
-    i = 0
-    images_list = get_image_paths('workspace/data_src')
-    while i<stop:
-        image_path = images_list[i]
-        image = cv2.imread(image_path)
+def get_train_images()
+    image_provider = get_images()
+    for image in image_provider:
         image = random_transform( image, **random_transform_args )
         warped_img, target_img = random_warp( image )
         yield warped_img, target_img
+
+ds_counter = tf.data.Dataset.from_generator(count, args=[25], output_types=tf.int32, output_shapes = (), )
+
 
 def get_training_data( images, batch_size ):
     indices = numpy.random.randint( len(images), size=batch_size )
