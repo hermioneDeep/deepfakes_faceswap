@@ -13,8 +13,8 @@ from tensorflow.python.framework.ops import disable_eager_execution
 
 optimizer = Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 )
 
-IMAGE_SHAPE = (64,64,3)
-ENCODER_DIM = 1024
+IMAGE_SHAPE = tf.constant((64,64,3))
+ENCODER_DIM = tf.constant(1024)
 
 def conv( filters ):
     def block(x):
