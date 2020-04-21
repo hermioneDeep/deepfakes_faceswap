@@ -45,7 +45,7 @@ def Encoder():
     return Model( input_, x )
 
 def Decoder():
-    input_ = Input( shape=(8,8,512) )
+    input_ = Input( shape=tf.constant((8,8,512)) )
     x = input_
     x = upscale(256)(x)
     x = upscale(128)(x)
