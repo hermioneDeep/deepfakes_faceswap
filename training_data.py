@@ -11,22 +11,6 @@ random_transform_args = {
     }
 
 
-class ArtificialDataset(tf.data.Dataset):
-    def _generator(num_samples):
-    image_provider = get_images()
-    for image in image_provider:
-        image = random_transform( image, **random_transform_args )
-        warped_img, target_img = random_warp( image )
-        yield warped_img, target_img    
-    def __new__(cls, num_samples=3):
-        return tf.data.Dataset.from_generator(
-            cls._generator,
-            output_types=tf.dtypes.int64,
-            output_shapes=(1,),
-            args=(num_samples,)
-        )
-
-
 def get_train_images():
     image_provider = get_images()
     for image in image_provider:
