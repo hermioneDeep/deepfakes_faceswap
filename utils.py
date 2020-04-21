@@ -15,21 +15,6 @@ def load_images( image_paths, convert=None ):
         all_images[i] = image
     return all_images
 
-def get_images(path):
-    """ Generator for loading images from a folder
-
-    Yields
-    ------
-    filename: str
-        The filename of the loaded image.
-    image: numpy.ndarray
-        The loaded image.
-    """
-    file_list = get_image_paths()
-    for idx, filename in enumerate(file_list):
-        image_read = cv2.imread(filename)(filename, raise_error=False, with_hash=False)
-        yield image_read    
-
 def get_transpose_axes( n ):
     if n % 2 == 0:
         y_axes = list( range( 1, n-1, 2 ) )

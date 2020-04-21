@@ -1,7 +1,6 @@
 import numpy
 from image_augmentation import random_transform
 from image_augmentation import random_warp
-from utils import get_images
 
 random_transform_args = {
     'rotation_range': 10,
@@ -9,14 +8,6 @@ random_transform_args = {
     'shift_range': 0.05,
     'random_flip': 0.4,
     }
-
-
-def get_train_images():
-    image_provider = get_images()
-    for image in image_provider:
-        image = random_transform( image, **random_transform_args )
-        warped_img, target_img = random_warp( image )
-        yield warped_img, target_img
 
 def get_training_data( images, batch_size ):
     indices = numpy.random.randint( len(images), size=batch_size )
