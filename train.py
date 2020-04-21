@@ -31,7 +31,7 @@ images_A += images_B.mean( axis=(0,1,2) ) - images_A.mean( axis=(0,1,2) )
 print( "press 'q' to stop training and save model" )
 
 for epoch in range(1000000):
-    batch_size = 2048
+    batch_size = 800
     warped_A, target_A = get_training_data( images_A, batch_size )
     warped_B, target_B = get_training_data( images_B, batch_size )
 
