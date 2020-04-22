@@ -19,7 +19,7 @@ def convert_one_image( autoencoder, image ):
     assert image.shape == (256,256,3)
     crop = slice(48,208)
     face = image[crop,crop]
-    face = cv2.resize( face, (128,128) )
+    face = cv2.resize( face, (64,64) )
     face = numpy.expand_dims( face, 0 )
     new_face = autoencoder.predict( face / 255.0 )[0]
     new_face = numpy.clip( new_face * 255, 0, 255 ).astype( image.dtype )

@@ -13,7 +13,7 @@ from pixel_shuffler import PixelShuffler
 
 optimizer = Adam( lr=5e-5, beta_1=0.5, beta_2=0.999 )
 
-IMAGE_SHAPE = (128,128,3)
+IMAGE_SHAPE = (64,64,3)
 ENCODER_DIM = 1024
 
 def conv( filters ):
@@ -34,6 +34,7 @@ def upscale( filters ):
 def Encoder():
     input_ = Input( shape=IMAGE_SHAPE )
     x = input_
+    x = conv( 128)(x)
     x = conv( 256)(x)
     x = conv( 512)(x)
     x = conv(1024)(x)
@@ -48,6 +49,7 @@ def Decoder():
     x = input_
     x = upscale(256)(x)
     x = upscale(128)(x)
+    x = upscale( 64)(x)
     x = Conv2D( 3, kernel_size=5, padding='same', activation='sigmoid' )(x)
     return Model( input_, x )
 

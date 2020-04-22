@@ -35,7 +35,7 @@ def random_warp( image ):
     dst_points = numpy.mgrid[0:65:16,0:65:16].T.reshape(-1,2)
     mat = umeyama( src_points, dst_points, True )[0:2]
 
-    target_image = cv2.warpAffine( image, mat, (128,128) )
+    target_image = cv2.warpAffine( image, mat, (64,64) )
 
     return warped_image, target_image
 
