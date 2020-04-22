@@ -68,8 +68,8 @@ try:
         y = Input( shape=IMAGE_SHAPE )
         #autoencoder_A = Model( x, decoder_A( encoder(x) ) )
         #autoencoder_B = Model( x, decoder_B( encoder(x) ) )
-        dual_model = keras.Model(inputs=[x, y],
-                            outputs=[decoder_A(encoder(x)), decoder_B(encoder(x))])
+        dual_model = Model(inputs=[x, y],
+                            outputs=[decoder_A(encoder(x)), decoder_B(encoder(y))])
         dual_model.compile(optimizer=optimizer, loss='mean_absolute_error')
     print("compiled")
 except:

@@ -37,8 +37,8 @@ for epoch in range(1000000):
     warped_B, target_B = get_training_data( images_B, batch_size )
     #loss_A = autoencoder_A.train_on_batch( warped_A, target_A )
     #loss_B = autoencoder_B.train_on_batch( warped_B, target_B )
-    dual_loss = dual_model.fit([warped_A, warped_B], [target_A, target_B], epoch = 10)
-    print( dual_loss )
+    dual_loss = dual_model.fit([warped_A, warped_B], [target_A, target_B], epochs = 10)
+    #print( dual_loss )
     if epoch % 10 == 0:
         save_model_weights()
         test_A = target_A[0:14]
