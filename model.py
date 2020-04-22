@@ -65,11 +65,15 @@ try:
         decoder_B = Decoder()
 
         x = Input( shape=IMAGE_SHAPE )
-        autoencoder_A = Model( x, decoder_A( encoder(x) ) )
-        autoencoder_B = Model( x, decoder_B( encoder(x) ) )
+        y = Input( shape=IMAGE_SHAPE )
+        #autoencoder_A = Model( x, decoder_A( encoder(x) ) )
+        #autoencoder_B = Model( x, decoder_B( encoder(x) ) )
+        dual_model = keras.Model(inputs=[x, y],
+                            outputs=[decoder_A(encoder(x)), decoder_B(encoder(x))])
+        dual_model.compile(optimizer=optimizer, loss='mean_absolute_error')
     print("compiled")
 except:
     print("error")
-autoencoder_A.compile( optimizer=optimizer, loss='mean_absolute_error' )
-autoencoder_B.compile( optimizer=optimizer, loss='mean_absolute_error' )
+#autoencoder_A.compile( optimizer=optimizer, loss='mean_absolute_error' )
+#autoencoder_B.compile( optimizer=optimizer, loss='mean_absolute_error' )
 
