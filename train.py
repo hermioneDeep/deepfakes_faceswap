@@ -35,8 +35,8 @@ for epoch in range(1000000):
     warped_A, target_A = get_training_data( images_A, batch_size )
     warped_B, target_B = get_training_data( images_B, batch_size )
 
-    loss_A = autoencoder_A.fit( warped_A, target_A, epochs = 10 )
-    loss_B = autoencoder_B.fit( warped_B, target_B, epochs = 10 )
+    loss_A = autoencoder_A.train_on_batch( warped_A, target_A )
+    loss_B = autoencoder_B.train_on_batch( warped_B, target_B )
     print( loss_A, loss_B )
 
     if epoch % 100 == 0:
