@@ -142,27 +142,27 @@ def Decoder():
 #    return Model(input_, outputs=outputs)
 
 
-#resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
-#tf.config.experimental_connect_to_cluster(resolver)
-## This is the TPU initialization code that has to be at the beginning.
-#tf.tpu.experimental.initialize_tpu_system(resolver)
-#strategy = tf.distribute.experimental.TPUStrategy(resolver)
-#try:
-    #with strategy.scope():
-encoder = Encoder()
-decoder_A = Decoder()
-decoder_B = Decoder()
+resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
+tf.config.experimental_connect_to_cluster(resolver)
+# This is the TPU initialization code that has to be at the beginning.
+tf.tpu.experimental.initialize_tpu_system(resolver)
+strategy = tf.distribute.experimental.TPUStrategy(resolver)
+try:
+    with strategy.scope():
+        encoder = Encoder()
+        decoder_A = Decoder()
+        decoder_B = Decoder()
 
-var_x = Input( shape=input_shape )
-var_y = Input( shape=input_shape )
-#autoencoder_A = Model( x, decoder_A( encoder(x) ) )
-#autoencoder_B = Model( x, decoder_B( encoder(x) ) )
-dual_model = Model(inputs=[var_x, var_y],
-                    outputs=[decoder_A(encoder(var_x)), decoder_B(encoder(var_y))])
-dual_model.compile(optimizer=optimizer, loss='mean_absolute_error')
-print("compiled")
-#except:
-#    print("error")
+        var_x = Input( shape=input_shape )
+        var_y = Input( shape=input_shape )
+        #autoencoder_A = Model( x, decoder_A( encoder(x) ) )
+        #autoencoder_B = Model( x, decoder_B( encoder(x) ) )
+        dual_model = Model(inputs=[var_x, var_y],
+                            outputs=[decoder_A(encoder(var_x)), decoder_B(encoder(var_y))])
+        dual_model.compile(optimizer=optimizer, loss='mean_absolute_error')
+        print("compiled")
+except:
+    print("error")
 #autoencoder_A.compile( optimizer=optimizer, loss='mean_absolute_error' )
 #autoencoder_B.compile( optimizer=optimizer, loss='mean_absolute_error' )
 
