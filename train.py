@@ -47,13 +47,12 @@ def data_generator(src = 'workspace/data_src/*', dst = 'workspace/data_dst/*', b
   print(paths_src)
   assert len(paths_src) >= batch_size
   assert len(paths_dst) >= batch_size
-  while True:
-    for i in range(batch_size):
-      batch_src[i] = load_and_preprocess(paths_src[i])
-      batch_dst[i] = load_and_preprocess(paths_dst[i])
-      inputs = [batch_src, batch_dst]
-      targets = [batch_src, batch_dst]
-    yield inputs, targets
+  for i in range(batch_size):
+    batch_src[i] = load_and_preprocess(paths_src[i])
+    batch_dst[i] = load_and_preprocess(paths_dst[i])
+    inputs = [batch_src, batch_dst]
+    targets = [batch_src, batch_dst]
+  yield inputs, targets
 
 #batcher = data_generator()
 
